@@ -5,7 +5,7 @@ GPA Calculator is simple HTML/JavaScript project to calculate GPA on 10 pointer 
 ## Description
 Logic of this project is to calculate GPA <br>
 All you have to do is add courses, their credits and grade acquired <br>
-After that, your GPA would be displayed on webpage <br><br>
+After that, your GPA would be displayed on webpage <br>
 
 
 ## How to use?
@@ -20,7 +20,14 @@ After that, your GPA would be displayed on webpage <br><br>
 Special thanks to Prosper
 for providing the code<br>
 My contribution was to convert it from 5 pointer scale to 10 pointer scale and fixing design bugs
-[Prosper's Link](https://codepen.io/Proyce/pen/NWxYWgr)<br><br>
+[Prosper's Link](https://codepen.io/Proyce/pen/NWxYWgr)<br>
+
+
+## Note
+I will be soon adding updates to this project<br>
+Various features includng selecting your own pointer scale<br>
+Percentage calculations, credit/audit courses selections, incentive points, etc.<br>
+Fork this repository and stay tuned for that.
 
 
 ## Thanks!
