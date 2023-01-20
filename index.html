@@ -1,0 +1,281 @@
+<html>
+    <head>
+        <title>GPA Calculator</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+  body {
+    background-image: linear-gradient(90deg, #610be3 ,#32a0ff);
+    color: white;
+  }
+  
+  #course-row {
+    font-size: 20px;
+    font-weight: bolder; 
+  }
+  
+  #credit-row {
+    font-size: 20px;
+    font-weight: bolder;
+  }
+  
+  #grade-row {
+    font-size: 20px;
+    font-weight: bolder;
+  }
+  
+  .calculator-box {
+    width: 50%;
+    height: auto;
+    margin: 100px auto;
+  /*  text-align: center; */
+  }
+  
+  /* On screens that are 1200px or less, set the width to 75% */
+  @media screen and (max-width: 1200px) {
+   .calculator-box {
+      width: 70%;
+    }
+  }
+  
+  /* On screens that are 950px or less, set the width to 75% */
+  @media screen and (max-width: 950px) {
+   .calculator-box {
+      width: 75%;
+    }
+  }
+  
+  /* On screens that are 600px or less, set the width to 90% */
+  @media screen and (max-width: 600px) {
+   .calculator-box {
+      width: 90%;
+    }
+  }
+  
+  h1 {
+    padding: 15px;
+    font-size: 40px;
+    text-align: center;
+    border: 4px solid #ffffff;
+  }
+  
+  h1:hover {
+    padding: 15px;
+    font-size: 40px;
+    text-align: center;
+    border: 4px solid #ffffff;
+    background-color: rgb(255, 255, 255);
+    color: black
+  }
+  
+  p{
+    padding: 20px;
+    font-size: 1.2rem;
+    color: rgb(255, 255, 255);
+    text-align: center;
+  }
+   
+  #course-wrapper, form {
+    color: black;
+    padding-left: 10px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  input{
+    border: none;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 20px;
+    width: 30%;
+    text-align: center;
+  }
+  select{
+    padding: 15px;
+    border: none;
+    margin: 10px;
+    border-radius: 20px;
+    width: 30%;
+    text-align: center;
+  /*   height: 30px; */
+  }
+   button {
+    width: 15%;
+    height: 40px;
+    padding: 1px;
+    margin: 5px;
+  /*   margin-left: 10px; */
+    border-radius: 10%;
+    background: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+  }
+  
+   button:hover {
+    width: 15%;
+    height: 40px;
+    padding: 1px;
+    margin: 5px;
+    border-width: 3px;
+    border-radius: 10%;
+    border-style: solid;
+    color: rgb(255, 255, 255);
+    background: rgb(200, 200, 200);
+    border-color: rgb(200, 200, 200);
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .lastp {
+    border: 4px solid #ffffff;
+  }
+  .lastp p {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 30px;
+    font-weight: bolder;
+  } 
+  
+  .lastp p:hover {
+    background-color: rgb(255, 255, 255);
+    color: #000;
+  } 
+  
+  
+</style>
+<script>
+  function gradeCalc(grade, unit) {
+    if (grade === "AA") {
+      return 10 * unit;
+    } else if (grade === "AB") {
+      return 9 * unit;
+    } else if (grade === "BB") {
+      return 8 * unit;
+    } else if (grade === "BC") {
+      return 7 * unit;
+    } else if (grade === "CC") {
+      return 6 * unit;
+    } else if (grade === "CD") {
+      return 5 * unit;
+    } else if (grade === "DD") {
+      return 4 * unit;
+    } else if (grade === "F") {
+      return 0 * unit;
+    }
+  }
+  
+  let counter = 1;
+  
+  function addCourse() {
+    let addNew = document.createElement("form");
+    addNew.classList.add("add_new", `key-${counter}`);
+    const course_name = `
+    <form class="add_new key-${counter}">
+      <input type="text" placeholder="Course Name" class="courses key-${counter}" required>
+          <input type="number" placeholder="Credit Units" class="credit-units key-${counter}" required>
+          <select class="grade key-${counter}" required>
+            <option class="grade" value="select">Grade</option>
+            <option class="grade" value="10">AA</option>
+            <option class="grade" value="9">AB</option>
+            <option class="grade" value="8">BB</option>
+            <option class="grade" value="7">BC</option>
+            <option class="grade" value="6">CC</option>
+            <option class="grade" value="5">CD</option>
+            <option class="grade" value="4">DD</option>
+            <option class="grade" value="0">FF</option>
+      </select>  
+    </form>
+    `;
+    addNew.innerHTML = course_name;
+    document.getElementById("course-wrapper").appendChild(addNew);
+    counter++;
+  }
+  
+  function removeCourse() {
+    let mainForm = document.querySelector("form.add_new");
+    mainForm.remove();
+  }
+  
+  const reports = [];
+  
+  /**
+   * @description calculates cgpa
+   */
+  function calcCgpa() {
+    const CGPAPARAGRAPH = document.getElementById("cgpa-calc");
+    const GRADESSELECT = document.querySelectorAll("select.grade");
+    const UNIT = document.querySelectorAll("input.credit-units");
+  
+    const courseReport = {};
+  
+    const listOfGrades = [];
+    const listOfUnits = [];
+    let totalUnits = 0;
+  
+    GRADESSELECT.forEach((e) => {
+      let GRADES = e.options;
+      const selectedIndex = e.selectedIndex;
+      const selectedGrade = GRADES[selectedIndex];
+      const gradeValue = selectedGrade.text.toUpperCase();
+      listOfGrades.push(gradeValue);
+    });
+    console.log(listOfGrades);
+  
+    UNIT.forEach((e) => {
+      const unitValue = parseInt(e.value);
+      totalUnits += unitValue;
+      listOfUnits.push(unitValue);
+    });
+    console.log(listOfUnits);
+  
+    let totalEarnedUnits = 0;
+  
+    for (let i = 0; i < listOfUnits.length; i++) {
+      totalEarnedUnits += gradeCalc(listOfGrades[i], listOfUnits[i]);
+    }
+    const gpa = totalEarnedUnits / totalUnits;
+    
+    if (gpa >= 0){
+      CGPAPARAGRAPH.textContent = "Your GPA is " + gpa.toFixed(2);   
+    } else {
+      CGPAPARAGRAPH.textContent = "Please enter your correct grade and credit units";    
+    }
+    
+  }
+  
+</script>
+    </head>
+    <body>
+      <div class="calculator-box">
+        <h1>GPA CALCULATOR</h1>
+        <p>
+          This GPA Calculator is based on the Indian grading system.<br>
+          Your GPA would be calculated on a 10 pointer scale.
+        </p>
+      <div id="course-wrapper">
+      </div>
+      <div class="btn">
+        <button onclick="addCourse()">+ Add Course</button>
+        <button onclick="removeCourse()">- Remove Course</button>
+        <button onclick="calcCgpa()">Calculate GPA</button>
+      </div>
+      <br><br>
+      <div class="lastp">
+        <p id="cgpa-calc">Your GPA is:</p>
+      </div>
+      <div>
+        <br><br>
+        <a href="http://github.com/shrenikmehar/gpacalculator" style="color:white; text-decoration:none"><h3 align="center" color=white>About Me</h3></a>
+      </div>
+    </div>
+  </body>
+</html>
