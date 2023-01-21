@@ -13,7 +13,8 @@ After that, your GPA would be displayed on webpage <br>
 <b>Step 1.</b> Open index.html in any web browser <br>
 <b>Step 2.</b> Add courses, their credits and grade acquired<br>
 <b>Step 3.</b> Click on Calculate and your GPA would be displayed <br><br>
-<img width="677" alt="image" src="https://user-images.githubusercontent.com/111577600/213820647-c0d6aa2e-e03e-47a6-adcd-2488b46746b2.png">
+<img width="681" alt="Screenshot 2023-01-21 102707" src="https://user-images.githubusercontent.com/111577600/213844198-e61cd3d3-0a8c-4724-8e90-5d96526e861b.png">
+
 
 
 
